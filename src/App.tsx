@@ -1,5 +1,6 @@
 import { HashRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import React from 'react'
+import DetailView from "./components/DetailView"
 import EnhancedTable from "./components/EnhancedTable"
 
 const App = () => {
@@ -7,8 +8,8 @@ const App = () => {
     <Router>
     <div className="app">
       <Switch>
-        <Route exact path="/login">
-          <EnhancedTable />
+        <Route exact path="/view/:id">
+          <DetailView />
         </Route>
         <Route path="/dashboard">
           <EnhancedTable />

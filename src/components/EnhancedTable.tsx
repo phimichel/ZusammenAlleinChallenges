@@ -16,6 +16,8 @@ import { EnhancedTableToolbar } from './EnhancedTableToolbar';
 import { PlayCard } from './PlayCard';
 import { PlayCardPictureService } from '../services/play-card-picture-service';
 import items from '../items.json';
+import { useHistory } from "react-router-dom";
+
 
 function createData(name: string, calories: string, fat: number, carbs: number, protein: number) {
   return { name, calories, fat, carbs, protein };
@@ -85,7 +87,8 @@ export default function EnhancedTable() {
   const [selected, setSelected] = React.useState([] as string[]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(50);
+  const history = useHistory();
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -137,6 +140,10 @@ export default function EnhancedTable() {
 
   const createPicture = () => {
     PlayCardPictureService.downloadPicture()
+  }
+  
+  const createLink = () => {     
+    history.push('/view/' + selected.map((i,idx) => items.findIndex(it => it.Challenge == i)).join(','))
   }
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
@@ -206,7 +213,7 @@ export default function EnhancedTable() {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[50, 100]}
           component="div"
           count={rows.length}
           rowsPerPage={rowsPerPage}
@@ -219,6 +226,7 @@ export default function EnhancedTable() {
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
       />
+      <Button variant="contained" onClick={createLink}>Gehe zu Link</Button>
       <Button variant="contained" onClick={createPicture}>Karte exportieren</Button>
     </div>
   );
