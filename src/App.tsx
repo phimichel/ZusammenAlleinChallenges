@@ -1,26 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { HashRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import React from 'react'
+import EnhancedTable from "./components/EnhancedTable"
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <Router>
+    <div className="app">
+      <Switch>
+        <Route exact path="/login">
+          <EnhancedTable />
+        </Route>
+        <Route path="/dashboard">
+          <EnhancedTable />
+        </Route>
+        <Route path="/" exact>
+          <Redirect to="/dashboard" />
+        </Route>
+      </Switch>
     </div>
-  );
+  </Router>
+  )
 }
-
-export default App;
+ 
+export default App
