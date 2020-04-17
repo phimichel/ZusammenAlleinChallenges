@@ -10,7 +10,7 @@ const headCells = [
   { id: 'Training', numeric: true, disablePadding: false, label: 'Training' },
   { id: 'Teilnehmer', numeric: true, disablePadding: false, label: 'Teilnehmer' },
   { id: 'Ort', numeric: true, disablePadding: false, label: 'Ort' },
-  { id: 'Mindestalter', numeric: true, disablePadding: false, label: 'Alterstufe' },
+  { id: 'Altersgruppe', numeric: true, disablePadding: false, label: 'Alterstufe' },
   { id: 'Tags', numeric: true, disablePadding: false, label: 'Tags' },
 ];
 
