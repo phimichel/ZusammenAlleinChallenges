@@ -154,7 +154,6 @@ export default function EnhancedTable() {
     <div className={classes.root}>
       <PlayCard items={selected} />
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
           <Table
             className={classes.table}

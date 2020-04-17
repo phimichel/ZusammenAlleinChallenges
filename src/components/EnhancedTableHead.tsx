@@ -3,11 +3,15 @@ import { TableHead, TableRow, TableCell, Checkbox, TableSortLabel } from "@mater
 import PropTypes from 'prop-types';
 
 const headCells = [
-  { id: 'name', numeric: false, disablePadding: true, label: 'Name' },
-  { id: 'calories', numeric: true, disablePadding: false, label: 'Beschreibung' },
-  { id: 'fat', numeric: true, disablePadding: false, label: 'Fat (g)' },
-  { id: 'carbs', numeric: true, disablePadding: false, label: 'Carbs (g)' },
-  { id: 'protein', numeric: true, disablePadding: false, label: 'Protein (g)' },
+  { id: 'Challenge', numeric: false, disablePadding: true, label: 'Challenge' },
+  { id: 'Beschreibung', numeric: true, disablePadding: false, label: 'Beschreibung' },
+  { id: 'Level', numeric: true, disablePadding: false, label: 'Level' },
+  { id: 'Ziel', numeric: true, disablePadding: false, label: 'Ziel' },
+  { id: 'Training', numeric: true, disablePadding: false, label: 'Training' },
+  { id: 'Teilnehmer', numeric: true, disablePadding: false, label: 'Teilnehmer' },
+  { id: 'Ort', numeric: true, disablePadding: false, label: 'Ort' },
+  { id: 'Mindestalter', numeric: true, disablePadding: false, label: 'Alterstufe' },
+  { id: 'Tags', numeric: true, disablePadding: false, label: 'Tags' },
 ];
 
 export function EnhancedTableHead(props) {
@@ -19,14 +23,7 @@ export function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'select all desserts' }}
-          />
-        </TableCell>
+        <TableCell></TableCell>
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
