@@ -17,6 +17,7 @@ import { PlayCard } from './PlayCard';
 import { PlayCardPictureService } from '../services/play-card-picture-service';
 import items from '../items.json';
 import {useParams } from "react-router-dom";
+import { SimpleTable } from './SimpleTable';
 
 function createData(name: string, calories: string, fat: number, carbs: number, protein: number) {
   return { name, calories, fat, carbs, protein };
@@ -128,6 +129,7 @@ export default function DetailView() {
   return (
     <div className={classes.root}>
       <PlayCard items={selected} />
+      <SimpleTable items={selected} />
       
       <Button variant="contained" onClick={createPicture}>Karte exportieren</Button>
     </div>
