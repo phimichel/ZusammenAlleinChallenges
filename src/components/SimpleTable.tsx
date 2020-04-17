@@ -1,6 +1,4 @@
-import Checkbox from '@material-ui/core/Checkbox';
 import { makeStyles } from '@material-ui/core/styles';
-import Switch from '@material-ui/core/Switch';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -78,7 +76,7 @@ export const SimpleTable: React.FC<SimpleTableProps> = ({ items = [] }) => {
                                         hover
                                         role="checkbox"
                                         tabIndex={-1}
-                                        key={row.name}
+                                        key={index}
                                     >
                                         <TableCell component="th" id={labelId} scope="row" padding="none">
                                             {row.name}
