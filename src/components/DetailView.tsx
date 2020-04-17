@@ -44,7 +44,7 @@ export default function DetailView() {
   function getSelection(id) {
     console.log(id)
     /* truncate first the numbers */
-    var indexes = id.split(",", 25)
+    var indexes = new Buffer(id, 'base64').toString('ascii').split(",", 25)
     /* filter items */
     const elems = indexes.map(i => items[i])
     return elems

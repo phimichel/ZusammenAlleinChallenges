@@ -17,6 +17,7 @@ import { PlayCard } from './PlayCard';
 import { PlayCardPictureService } from '../services/play-card-picture-service';
 import items from '../items.json';
 import { useHistory } from "react-router-dom";
+import { hashCode } from '../utils';
 
 
 function createData(name: string, calories: string, fat: number, carbs: number, protein: number) {
@@ -143,7 +144,7 @@ export default function EnhancedTable() {
   }
   
   const createLink = () => {     
-    history.push('/view/' + selected.map((i,idx) => items.findIndex(it => it.Challenge === i)).join(','))
+    history.push('/view/' + new Buffer(selected.map((i,idx) => items.findIndex(it => it.Challenge === i)).join(',')).toString('base64')  )
   }
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
