@@ -12,23 +12,12 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import React from 'react';
 import { EnhancedTableHead } from './EnhancedTableHead';
-import { EnhancedTableToolbar } from './EnhancedTableToolbar';
 import { PlayCard } from './PlayCard';
 import { PlayCardPictureService } from '../services/play-card-picture-service';
-import items from '../items.json';
 import { useHistory } from "react-router-dom";
+import { ItemService, ChallangeItem } from '../services/item-service';
 
-
-function createData(name: string, calories: string, fat: number, carbs: number, protein: number) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows =  createRows()
-
-function createRows() {
-  return items.map(item => createData(item.Challenge, item.Beschreibung, 3.7, 67, 4.3));
-
-}
+const rows = ItemService.getAll()
 
 function descendingComparator(a: any, b: any, orderBy: string) {
   if (b[orderBy] < a[orderBy]) {
@@ -98,7 +87,7 @@ export default function EnhancedTable() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.name);
+      const newSelecteds = rows.map((n) => n.Challange);
       setSelected(newSelecteds);
       return;
     }
@@ -143,7 +132,7 @@ export default function EnhancedTable() {
   }
   
   const createLink = () => {     
-    history.push('/view/' + new Buffer(selected.map((i,idx) => items.findIndex(it => it.Challenge === i)).join(',')).toString('base64')  )
+    history.push('/view/' + new Buffer(selected.map((i,idx) => rows.findIndex(it => it.Challange === i)).join(',')).toString('base64')  )
   }
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
@@ -154,7 +143,6 @@ export default function EnhancedTable() {
     <div className={classes.root}>
       <PlayCard items={selected} />
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
           <Table
             className={classes.table}
@@ -174,18 +162,18 @@ export default function EnhancedTable() {
             <TableBody>
               {stableSort(rows, getComparator(order as any, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
+                .map((row: ChallangeItem, index: number) => {
+                  const isItemSelected = isSelected(row.Challange);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.name)}
+                      onClick={(event) => handleClick(event, row.Challange)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.name}
+                      key={row.Challange}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -195,12 +183,16 @@ export default function EnhancedTable() {
                         />
                       </TableCell>
                       <TableCell component="th" id={labelId} scope="row" padding="none">
-                        {row.name}
+                        {row.Challange}
                       </TableCell>
-                      <TableCell align="right">{row.calories}</TableCell>
-                      <TableCell align="right">{row.fat}</TableCell>
-                      <TableCell align="right">{row.carbs}</TableCell>
-                      <TableCell align="right">{row.protein}</TableCell>
+                      <TableCell align="right">{row.Beschreibung.text}</TableCell>
+                      <TableCell align="right">{row.Level}</TableCell>
+                      <TableCell align="right">{row.Ziel}</TableCell>
+                      <TableCell align="right">{row.Training}</TableCell>
+                      <TableCell align="right">{row.Teilnehmer}</TableCell>
+                      <TableCell align="right">{row.Ort}</TableCell>
+                      <TableCell align="right">{row.Altersgruppe}</TableCell>
+                      <TableCell align="right">{row.Tags}</TableCell>
                     </TableRow>
                   );
                 })}
@@ -213,7 +205,7 @@ export default function EnhancedTable() {
           </Table>
         </TableContainer>
         <TablePagination
-          rowsPerPageOptions={[50, 100]}
+          rowsPerPageOptions={[25, 50, 100]}
           component="div"
           count={rows.length}
           rowsPerPage={rowsPerPage}
