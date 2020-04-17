@@ -17,7 +17,6 @@ import { PlayCard } from './PlayCard';
 import { PlayCardPictureService } from '../services/play-card-picture-service';
 import items from '../items.json';
 import { useHistory } from "react-router-dom";
-import { hashCode } from '../utils';
 
 
 function createData(name: string, calories: string, fat: number, carbs: number, protein: number) {

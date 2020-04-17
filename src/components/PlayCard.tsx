@@ -6,7 +6,7 @@ interface PlayCardProps {
   items?: string[]
 }
 
-const fillArray = (array: string[], count: number = 25) => {
+const fillArray = (array: string[], count: number = 16) => {
   for (let i = array.length; i < count; i++) {
     array.push('')
   }
@@ -16,7 +16,7 @@ const fillArray = (array: string[], count: number = 25) => {
 
 export const PlayCard: React.FC<PlayCardProps> = ({ items = []}) => {
   const displayItems = [...items]
-  if (displayItems.length < 25) {
+  if (displayItems.length < 16) {
     fillArray(displayItems)
   }
 
