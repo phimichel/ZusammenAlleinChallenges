@@ -79,27 +79,37 @@ export default function EnhancedTable() {
   const [rowsPerPage, setRowsPerPage] = React.useState(50);
   const history = useHistory();
 
-  useEffect(() => {
-    setCopyLink(createLink())
-    setWhatsappLink(createWhatsAppLink())
-  }, [selected])
-
-  const createWhatsAppLink = () : string => {
+  const createWhatsAppLink = (): string => {
     const text = "Hier ist deine neue Bingokarte: "
-    const currentLoc = window.location.href;
-    const detailLink = currentLoc.slice(0, currentLoc.length - 1) + createLink();
-    console.log(currentLoc)
-    return "whatsapp://send?text=" + encodeURI(text + detailLink)
+    return "whatsapp://send?text=" + encodeURI(text + absoluteCopyLink)
   }
-  const createLink = () : string => {     
-    return '/view/' + new Buffer(selected.map((i,idx) => rows.findIndex(it => it.Challange === i)).join(',')).toString('base64')
+  const createAbsoluteLink = (): string => {
+    const currentLoc = window.location.href;
+    return currentLoc.slice(0, currentLoc.length - 1) + copyLink;
+  }
+  const createLink = (): string => {
+    return '/view/' + new Buffer(selected.map((i, idx) => rows.findIndex(it => it.Challange === i)).join(',')).toString('base64')
   }
   const navigateToLink = () => {
     history.push(createLink())
   }
 
   const [copyLink, setCopyLink] = React.useState('');
+  const [absoluteCopyLink, setAbsoluteCopyLink] = React.useState('');
   const [whatsappLink, setWhatsappLink] = React.useState('');
+
+  useEffect(() => {
+    setCopyLink(createLink())
+  }, [selected])
+
+  useEffect(() => {
+    setAbsoluteCopyLink(createAbsoluteLink())
+  }, [copyLink])
+
+  useEffect(() => {
+    setWhatsappLink(createWhatsAppLink())
+  }, [absoluteCopyLink])
+
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -152,23 +162,23 @@ export default function EnhancedTable() {
   const createPicture = () => {
     PlayCardPictureService.downloadPicture()
   }
-  
+
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
-  
+
   const copyToClipboard = e => {
-    navigator.clipboard.writeText(copyLink);
+    navigator.clipboard.writeText(absoluteCopyLink);
   }
 
   return (
     <div className={classes.root}>
       <PlayCard items={selected} />
       <div>
-      <TextField id="copy-link" InputProps={{
-            readOnly: true,
-          }}  defaultValue={copyLink} value={copyLink} />
-      <Button variant="contained" onClick={copyToClipboard}>Copy</Button>
+        <TextField id="copy-link" InputProps={{
+          readOnly: true,
+        }} defaultValue={absoluteCopyLink} value={absoluteCopyLink} />
+        <Button variant="contained" onClick={copyToClipboard}>Copy</Button>
       </div>
       <div>
         <Button variant="contained" onClick={navigateToLink}>Gehe zu Seite</Button>
