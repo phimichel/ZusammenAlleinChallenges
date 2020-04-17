@@ -58,7 +58,9 @@ export const SimpleTable: React.FC<SimpleTableProps> = ({ items = [] }) => {
                                             {row.name}
                                         </TableCell>
                                         <TableCell align="right">{row.description}</TableCell>
-                                        <TableCell align="right">{row.link}</TableCell>
+                                        <TableCell align="right">{row.link && 
+                                            <a target="_blank" rel="noopener noreferrer" href={row.link}>Anleitung</a>}
+                                        </TableCell>
                                     </TableRow>
                                 );
                             })}

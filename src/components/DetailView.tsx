@@ -1,5 +1,4 @@
 import { Button } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import React from 'react';
 import { useParams } from "react-router-dom";
 import items from '../items.json';
