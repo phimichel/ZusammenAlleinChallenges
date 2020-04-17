@@ -52,7 +52,7 @@ export const SimpleTable: React.FC<SimpleTableProps> = ({ items = [] }) => {
                                         hover
                                         role="checkbox"
                                         tabIndex={-1}
-                                        key={row.name}
+                                        key={index}
                                     >
                                         <TableCell component="th" id={labelId} scope="row" padding="none">
                                             {row.name}

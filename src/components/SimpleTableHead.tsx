@@ -1,5 +1,5 @@
 import React from "react";
-import { TableHead, TableRow, TableCell, Checkbox, TableSortLabel } from "@material-ui/core";
+import { TableHead, TableRow, TableCell, TableSortLabel } from "@material-ui/core";
 import PropTypes from 'prop-types';
 
 import './SimpleTable.scss'

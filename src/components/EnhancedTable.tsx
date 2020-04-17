@@ -143,7 +143,7 @@ export default function EnhancedTable() {
   }
   
   const createLink = () => {     
-    history.push('/view/' + selected.map((i,idx) => items.findIndex(it => it.Challenge == i)).join(','))
+    history.push('/view/' + selected.map((i,idx) => items.findIndex(it => it.Challenge === i)).join(','))
   }
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
