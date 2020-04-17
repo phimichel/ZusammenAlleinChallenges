@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core';
+import { Button, TextField } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Paper from '@material-ui/core/Paper';
@@ -10,7 +10,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { EnhancedTableHead } from './EnhancedTableHead';
 import { EnhancedTableToolbar } from './EnhancedTableToolbar';
 import { PlayCard } from './PlayCard';
@@ -90,6 +90,28 @@ export default function EnhancedTable() {
   const [rowsPerPage, setRowsPerPage] = React.useState(50);
   const history = useHistory();
 
+  useEffect(() => {
+    setCopyLink(createLink())
+    setWhatsappLink(createWhatsAppLink())
+  }, [selected])
+
+  const createWhatsAppLink = () : string => {
+    const text = "Hier ist deine neue Bingokarte: "
+    const currentLoc = window.location.href;
+    const detailLink = currentLoc.slice(0, currentLoc.length - 1) + createLink();
+    console.log(currentLoc)
+    return "whatsapp://send?text=" + encodeURI(text + detailLink)
+  }
+  const createLink = () : string => {     
+    return '/view/' + new Buffer(selected.map((i,idx) => items.findIndex(it => it.Challenge === i)).join(',')).toString('base64')
+  }
+  const navigateToLink = () => {
+    history.push(createLink())
+  }
+
+  const [copyLink, setCopyLink] = React.useState('');
+  const [whatsappLink, setWhatsappLink] = React.useState('');
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -142,17 +164,29 @@ export default function EnhancedTable() {
     PlayCardPictureService.downloadPicture()
   }
   
-  const createLink = () => {     
-    history.push('/view/' + new Buffer(selected.map((i,idx) => items.findIndex(it => it.Challenge === i)).join(',')).toString('base64')  )
-  }
-
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  
+  const copyToClipboard = e => {
+    navigator.clipboard.writeText(copyLink);
+  }
 
   return (
     <div className={classes.root}>
       <PlayCard items={selected} />
+      <div>
+      <TextField id="copy-link" InputProps={{
+            readOnly: true,
+          }}  defaultValue={copyLink} value={copyLink} />
+      <Button variant="contained" onClick={copyToClipboard}>Copy</Button>
+      </div>
+      <div>
+        <Button variant="contained" onClick={navigateToLink}>Gehe zu Seite</Button>
+      </div>
+      <div className="button-whatsapp">
+        <a href={whatsappLink}>In Whatsapp teilen</a>
+      </div>
       <Paper className={classes.paper}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
@@ -226,7 +260,6 @@ export default function EnhancedTable() {
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
       />
-      <Button variant="contained" onClick={createLink}>Gehe zu Link</Button>
       <Button variant="contained" onClick={createPicture}>Karte exportieren</Button>
     </div>
   );
