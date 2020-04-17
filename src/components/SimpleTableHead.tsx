@@ -2,6 +2,8 @@ import React from "react";
 import { TableHead, TableRow, TableCell, Checkbox, TableSortLabel } from "@material-ui/core";
 import PropTypes from 'prop-types';
 
+import './SimpleTable.scss'
+
 const headCells = [
   { id: 'name', numeric: false, disablePadding: true, label: 'Name' },
   { id: 'description', numeric: false, disablePadding: false, label: 'Beschreibung' },
@@ -9,7 +11,7 @@ const headCells = [
 ];
 
 export function SimpleTableHead(props) {
-  const { classes, order, orderBy, rowCount } = props;
+  const { order, orderBy, rowCount } = props;
 
   return (
     <TableHead>
@@ -27,7 +29,7 @@ export function SimpleTableHead(props) {
             >
               {headCell.label}
               {orderBy === headCell.id ? (
-                <span className={classes.visuallyHidden}>
+                <span className="visuallyHidden">
                   {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
                 </span>
               ) : null}
@@ -40,7 +42,6 @@ export function SimpleTableHead(props) {
 }
 
 SimpleTableHead.propTypes = {
-  classes: PropTypes.object.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']),
   orderBy: PropTypes.string,
   rowCount: PropTypes.number.isRequired,
