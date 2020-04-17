@@ -1,4 +1,3 @@
-import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -17,7 +16,7 @@ export const SimpleTable: React.FC<SimpleTableProps> = ({ items = [] }) => {
     const displayItems = [...items];
     const page = 1;
     const rowsPerPage = 25;
-    const [dense, setDense] = React.useState(false);
+    const [dense] = React.useState(false);
 
     const rows = createRows()
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
@@ -27,6 +26,7 @@ export const SimpleTable: React.FC<SimpleTableProps> = ({ items = [] }) => {
     }
 
     function createRows() {
+        console.log(displayItems)
         return displayItems.map(item => createData(item.Challenge, item.Beschreibung, item.Anleitungslink));
     }
 

@@ -45,16 +45,14 @@ export default function DetailView() {
     console.log(id)
     /* truncate first the numbers */
     var indexes = id.split(",", 25)
-    console.log('[getSelection] indexes:', indexes)
     /* filter items */
-    const elems = indexes.map(i => items[i].Challenge)
-    console.log('[getSelection] elements:', elems)
+    const elems = indexes.map(i => items[i])
     return elems
   }
   
   return (
     <div className={classes.root}>
-      <PlayCard items={selected} />
+      <PlayCard items={selected.map(item => item.Challenge)} />
       <SimpleTable items={selected} />
       
       <Button variant="contained" onClick={createPicture}>Karte exportieren</Button>
