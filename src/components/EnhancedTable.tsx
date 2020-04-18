@@ -1,4 +1,4 @@
-import { Button, TextField, Typography, Card, Link, ButtonGroup } from '@material-ui/core';
+import { Button, TextField, Typography, Card, Link } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Paper from '@material-ui/core/Paper';
@@ -55,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     width: '100%',
+    padding: '0',
     marginBottom: theme.spacing(2),
   },
   table: {
@@ -81,16 +82,26 @@ export default function EnhancedTable() {
   const [selected, setSelected] = React.useState([] as string[]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(50);
+  const [rowsPerPage, setRowsPerPage] = React.useState(25);
+  const [copyLink, setCopyLink] = React.useState('');
+  const [absoluteCopyLink, setAbsoluteCopyLink] = React.useState('');
+  const [whatsappLink, setWhatsappLink] = React.useState('');
+
   const history = useHistory();
 
   const createWhatsAppLink = (): string => {
     const text = "Hier ist deine neue Bingokarte: "
-    return "whatsapp://send?text=" + encodeURI(text + absoluteCopyLink)
+    const link = "whatsapp://send?text=" + encodeURIComponent(text + absoluteCopyLink)
+    console.log('whatsapp link', link)
+
+    return link
   }
   const createAbsoluteLink = (): string => {
     const currentLoc = window.location.href;
-    return currentLoc.slice(0, currentLoc.length - 1) + copyLink;
+    const basePath = currentLoc.slice(0, currentLoc.length - 1)
+
+    console.log(basePath, copyLink)
+    return basePath + copyLink;
   }
   const createLink = (): string => {
     return '/view/' + new Buffer(selected.map((i, idx) => rows.findIndex(it => it.Challange === i)).join(',')).toString('base64')
@@ -98,10 +109,6 @@ export default function EnhancedTable() {
   const navigateToLink = () => {
     history.push(createLink())
   }
-
-  const [copyLink, setCopyLink] = React.useState('');
-  const [absoluteCopyLink, setAbsoluteCopyLink] = React.useState('');
-  const [whatsappLink, setWhatsappLink] = React.useState('');
 
   useEffect(() => {
     setCopyLink(createLink())
@@ -175,8 +182,6 @@ export default function EnhancedTable() {
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
-
   const copyToClipboard = e => {
     navigator.clipboard.writeText(absoluteCopyLink);
   }
@@ -210,7 +215,6 @@ export default function EnhancedTable() {
           )} />
       </form>
       <Card>
-        <Paper className={classes.paper}>
           <TableContainer>
             <Table
               className={classes.table}
@@ -301,16 +305,11 @@ export default function EnhancedTable() {
                       </TableRow>
                     );
                   })}
-                {emptyRows > 0 && (
-                  <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                    <TableCell colSpan={6} />
-                  </TableRow>
-                )}
               </TableBody>
             </Table>
           </TableContainer>
           <TablePagination
-            rowsPerPageOptions={[25, 50, 100]}
+            rowsPerPageOptions={[25, 50]}
             component="div"
             count={rows.length}
             rowsPerPage={rowsPerPage}
@@ -318,12 +317,7 @@ export default function EnhancedTable() {
             onChangePage={handleChangePage}
             onChangeRowsPerPage={handleChangeRowsPerPage}
           />
-        </Paper>
       </Card>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      />
     </div>
   );
 }
