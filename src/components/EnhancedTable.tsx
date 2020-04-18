@@ -19,6 +19,7 @@ import { useHistory } from "react-router-dom";
 import { ItemService, ChallangeItem } from '../services/item-service';
 import { Tag } from './Tag';
 import { AutocompleteService, createLevelTag, TagOption, createZielTag, createTrainingTag, createOrtTag, createTeilnehmerTag, createAltergruppeTag } from '../services/autocomplete-service';
+import copy from 'copy-to-clipboard'
 
 const rows = ItemService.getAll()
 const autoCompleteOptions = AutocompleteService.createAutocompleteOptions()
@@ -183,7 +184,7 @@ export default function EnhancedTable() {
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   const copyToClipboard = e => {
-    navigator.clipboard.writeText(absoluteCopyLink);
+    copy(absoluteCopyLink);
   }
 
   const tagsToFilterBy = autoCompleteOptions.filter(option => selectedTags.includes(option.label))
