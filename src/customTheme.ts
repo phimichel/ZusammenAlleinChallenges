@@ -103,9 +103,9 @@ export const customTheme = createMuiTheme({
     },
     MuiOutlinedInput: {
       root: {
-        borderRadius: 0
+        borderRadius: 35
       }
-    }
+    },
   },
   typography: {
     fontFamily: 'Roboto, Helvetica, sans-serif',
@@ -120,6 +120,12 @@ export const customTheme = createMuiTheme({
       fontWeight: 400,
       margin: '50px 20px 20px'
     },
+    h3: {
+      textAlign: 'left',
+      color: data.primary.light,
+      margin: '20px 0px',
+      fontSize: '24px'
+    },
     h6: {
       textAlign: 'center'
     },
@@ -130,6 +136,10 @@ export const customTheme = createMuiTheme({
     },
     body1: {
       lineHeight: 1
+    },
+    subtitle1: {
+      textAlign: 'center',
+      fontSize: '14px'
     }
   }
 })

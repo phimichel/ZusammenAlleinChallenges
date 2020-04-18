@@ -1,4 +1,4 @@
-import { Button, TextField, Typography, Card, Link } from '@material-ui/core';
+import { Button, TextField, Typography, Card, Link, ButtonGroup } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Paper from '@material-ui/core/Paper';
@@ -190,24 +190,15 @@ export default function EnhancedTable() {
       </Typography>
       <Card>
         <PlayCard items={selected} />
-        <div>
-          <TextField id="copy-link" InputProps={{
-            readOnly: true,
-          }} value={absoluteCopyLink} />
-          <Button variant="contained" onClick={copyToClipboard}>Copy</Button>
-        </div>
-        <div>
-          <Button variant="contained" onClick={navigateToLink}>Gehe zu Seite</Button>
-        </div>
-        <div className="button-whatsapp">
-          <a href={whatsappLink}>In Whatsapp teilen</a>
-        </div>
-        <Button variant="contained" onClick={createPicture}>Karte exportieren</Button>
+          <Button variant="contained" onClick={copyToClipboard} className="map-btn">Kopiere Link</Button>
+          <Button variant="contained" onClick={navigateToLink} className="map-btn">Gehe zu Seite</Button>
+          <Button variant="contained" className="button-whatsapp map-btn"><a href={whatsappLink}>In Whatsapp teilen</a></Button>
+          <Button variant="contained" onClick={createPicture} className="map-btn">Karte als Bild runterladen</Button>
       </Card>
       <Typography variant="h2">
         Challenges
       </Typography>
-      <form style={{ display: 'inline-block' }} noValidate autoComplete="off" onSubmit={console.log}>
+      <form style={{ display: 'inline-block', marginLeft: '40px' }} noValidate autoComplete="off" onSubmit={console.log}>
         <Autocomplete 
           multiple
           value={selectedTags}

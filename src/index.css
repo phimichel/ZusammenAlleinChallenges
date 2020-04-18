@@ -20,3 +20,13 @@ strong {
 a {
   color: #8BC5D1;
 }
+
+.map-btn {
+  width: 300px;
+  margin: 20px 10px !important;
+}
+
+.map-btn a {
+  color: #ffffff;
+  text-decoration: none;
+}

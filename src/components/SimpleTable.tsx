@@ -20,9 +20,9 @@ export const SimpleTable: React.FC<SimpleTableProps> = ({ items = [] }) => {
                     {displayItems.map((item: any, index: number) => {
                         return (
                             <Paper variant="outlined">
-                                <div>{item.Challange}</div>
+                                <div style={{ marginBottom: '20px' }}><strong>{item.Challenge}</strong></div>
                                 <div>{item.Beschreibung}</div>
-                                <div>{item.Anleitungslink && <a target="_blank" rel="noopener noreferrer" href={item.Anleitungslink}>Anleitung</a>}</div>
+                                <div style={{ marginTop: '20px' }}>{item.Anleitungslink && <a target="_blank" rel="noopener noreferrer" href={item.Anleitungslink}>Anleitung</a>}</div>
                             </Paper>
                         );
                     })}
