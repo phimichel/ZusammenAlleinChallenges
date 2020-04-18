@@ -25,6 +25,13 @@ export const customTheme = createMuiTheme({
         borderBottom: '3px solid ' +  data.primary.light
       }
     },
+    MuiTableRow: {
+      root: {
+        '&$selected': {
+          backgroundColor: data.primary.lighter
+        }
+      }
+    },
     MuiTableCell: {
       alignRight: {
         span: {
@@ -59,6 +66,22 @@ export const customTheme = createMuiTheme({
         boxShadow: '0px 3px 6px ' + data.gray.light,
         backgroundColor: data.primary.light,
       },
+    },
+    MuiLink: {
+      root: {
+        color: data.primary.light,
+        textDecoration: 'none'
+      }
+    },
+    MuiCheckbox: {
+      root: {
+
+      }
+    },
+    MuiSvgIcon: {
+      root: {
+        fill: data.primary.light
+      }
     },
     MuiAppBar: {
       root: {

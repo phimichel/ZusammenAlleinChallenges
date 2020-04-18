@@ -115,7 +115,7 @@ const convert = (item: JSONItem): ChallangeItem => {
     },
     Altersgruppe: Mindestalter,
     Level: 1,
-    Tags: Tags.split(',').map(item => item.trim()),
+    Tags: Tags.split(',').map(item => item.trim()).filter(item => !!item),
     Ort,
     Teilnehmer,
     Ziel,

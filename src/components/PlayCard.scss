@@ -5,6 +5,7 @@
   display: flex;
   flex-wrap: wrap;
   margin: auto;
+  border: 2px solid #B7DBE2;
   // position: sticky;
   top: 0;
   background-color: white;
@@ -16,7 +17,7 @@
     flex-shrink: 0;
     flex-grow: 0;
     box-sizing: border-box;
-    border: 1px solid black;
+    border: 2px solid #B7DBE2;
     border-collapse: collapse;
     display: flex;
     justify-content: center;

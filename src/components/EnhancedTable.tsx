@@ -1,4 +1,4 @@
-import { Button, TextField, Typography, Card, Chip } from '@material-ui/core';
+import { Button, TextField, Typography, Card, Link } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Paper from '@material-ui/core/Paper';
@@ -10,14 +10,18 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import React, { useEffect } from 'react';
+import Autocomplete from '@material-ui/lab/Autocomplete'
+import React, { SyntheticEvent, useEffect } from 'react';
 import { EnhancedTableHead } from './EnhancedTableHead';
 import { PlayCard } from './PlayCard';
 import { PlayCardPictureService } from '../services/play-card-picture-service';
 import { useHistory } from "react-router-dom";
 import { ItemService, ChallangeItem } from '../services/item-service';
+import { Tag } from './Tag';
+import { AutocompleteService, createLevelTag, TagOption, createZielTag, createTrainingTag, createOrtTag, createTeilnehmerTag, createAltergruppeTag } from '../services/autocomplete-service';
 
 const rows = ItemService.getAll()
+const autoCompleteOptions = AutocompleteService.createAutocompleteOptions()
 
 function descendingComparator(a: any, b: any, orderBy: string) {
   if (b[orderBy] < a[orderBy]) {
@@ -163,6 +167,11 @@ export default function EnhancedTable() {
     PlayCardPictureService.downloadPicture()
   }
 
+  const addTag = (tag: TagOption, ev: SyntheticEvent) => {
+    ev.stopPropagation()
+    console.log(tag)
+  }
+
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
@@ -195,6 +204,15 @@ export default function EnhancedTable() {
       <Typography variant="h2">
         Challenges
       </Typography>
+      <form style={{ display: 'inline-block' }} noValidate autoComplete="off" onSubmit={console.log}>
+        <Autocomplete 
+          multiple
+          autoSelect={true}
+          options={autoCompleteOptions.map(el => el.label)}
+          renderInput={params => (
+            <TextField style={{ width: '500px'}} variant="outlined" label="Suche" {...params} />
+          )} />
+      </form>
       <Card>
         <Paper className={classes.paper}>
           <TableContainer>
@@ -239,14 +257,37 @@ export default function EnhancedTable() {
                         <TableCell component="th" id={labelId} scope="row" padding="none">
                           {row.Challange}
                         </TableCell>
-                        <TableCell align="left">{row.Beschreibung.text}</TableCell>
-                        <TableCell align="right"><Chip label={row.Level} /></TableCell>
-                        <TableCell align="right"><Chip label={row.Ziel} /></TableCell>
-                        <TableCell align="right"><Chip label={row.Training} /></TableCell>
-                        <TableCell align="right"><Chip label={row.Teilnehmer} /></TableCell>
-                        <TableCell align="right"><Chip label={row.Ort} /></TableCell>
-                        <TableCell align="right"><Chip label={row.Altersgruppe} /></TableCell>
-                        <TableCell align="right"><Chip label={row.Tags} /></TableCell>
+                        <TableCell align="left">
+                          <span>
+                            {row.Beschreibung.text}
+                          </span>
+                          <br/>
+                          {!!row.Beschreibung.link ? 
+                            (<span><strong>Link: </strong><Link href={row.Beschreibung.link}>{row.Beschreibung.link}</Link></span>)
+                            : null
+                          }
+                        </TableCell>
+                        <TableCell align="right">
+                          <Tag onClick={(ev) => addTag(createLevelTag(row.Level), ev)}>{createLevelTag(row.Level).label}</Tag>
+                        </TableCell>
+                        <TableCell align="right">
+                          {row.Ziel.map((el, i) => <Tag onClick={(ev) => addTag(createZielTag(el), ev)} key={i}>{createZielTag(el).label}</Tag>)}
+                        </TableCell>
+                        <TableCell align="right">
+                          {row.Training.map((el, i) => <Tag onClick={(ev) => addTag(createTrainingTag(el), ev)} key={i}>{el}</Tag>)}
+                        </TableCell>
+                        <TableCell align="right">
+                          {row.Teilnehmer.map((el, i) => <Tag onClick={(ev) => addTag(createTeilnehmerTag(el), ev)} key={i}>{el}</Tag>)}
+                        </TableCell>
+                        <TableCell align="right">
+                          {row.Ort.map((el, i) => <Tag onClick={(ev) => addTag(createOrtTag(el), ev)} key={i}>{el}</Tag>)}
+                        </TableCell>
+                        <TableCell align="right">
+                          <Tag onClick={(ev) => addTag(createAltergruppeTag(row.Altersgruppe), ev)}>{createAltergruppeTag(row.Altersgruppe).label}</Tag>
+                        </TableCell>
+                        <TableCell align="right">
+                          {row.Tags.map((el, i) => <Tag key={i}>{el}</Tag>)}
+                        </TableCell>
                       </TableRow>
                     );
                   })}
