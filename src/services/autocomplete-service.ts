@@ -69,12 +69,14 @@ const createAltersgruppeTags: TagCreator = (item) => {
   return [createAltergruppeTag(item.Altersgruppe)]
 }
 
+export const createTagsTag = (value) => ({
+  field: 'Tags',
+  value: value,
+  label: value
+})
+
 const createTagsTags: TagCreator = (item) => {
-  return item.Tags.map(el => ({
-    field: 'Tags',
-    value: el,
-    label: el
-  }))
+  return item.Tags.map(createTagsTag)
 }
 
 const createAutocompleteOptions = (): TagOption[] => {
