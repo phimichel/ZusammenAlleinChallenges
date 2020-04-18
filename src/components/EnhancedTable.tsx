@@ -105,7 +105,7 @@ export default function EnhancedTable() {
     return basePath + copyLink;
   }
   const createLink = (): string => {
-    return '/view/' + new Buffer(selected.map((i, idx) => rows.findIndex(it => it.Challange === i)).join(',')).toString('base64')
+    return '/view/' + new Buffer(selected.map((i, idx) => rows.findIndex(it => it.Challenge === i)).join(',')).toString('base64')
   }
   const navigateToLink = () => {
     window.open(absoluteCopyLink)
@@ -132,7 +132,7 @@ export default function EnhancedTable() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.Challange);
+      const newSelecteds = rows.map((n) => n.Challenge);
       setSelected(newSelecteds);
       return;
     }
@@ -267,17 +267,17 @@ export default function EnhancedTable() {
                     })
                   })   
                   .map((row: ChallangeItem, index: number) => {
-                    const isItemSelected = isSelected(row.Challange);
+                    const isItemSelected = isSelected(row.Challenge);
                     const labelId = `enhanced-table-checkbox-${index}`;
 
                     return (
                       <TableRow
                         hover
-                        onClick={(event) => handleClick(event, row.Challange)}
+                        onClick={(event) => handleClick(event, row.Challenge)}
                         role="checkbox"
                         aria-checked={isItemSelected}
                         tabIndex={-1}
-                        key={row.Challange}
+                        key={row.Challenge}
                         selected={isItemSelected}
                       >
                         <TableCell padding="checkbox">
@@ -288,7 +288,7 @@ export default function EnhancedTable() {
                           />
                         </TableCell>
                         <TableCell component="th" id={labelId} scope="row" padding="none" style={{width: '100% !important'}}>
-                          {row.Challange}
+                          {row.Challenge}
                         </TableCell>
                         <TableCell align="left">
                           <span>

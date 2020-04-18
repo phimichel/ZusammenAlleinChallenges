@@ -16,8 +16,8 @@ enum Training {
 }
 
 enum Teilnehmer {
-  alleine = 'alleine',
-  zwei = 'zwei',
+  alleine = 'Alleine',
+  zwei = 'Zwei',
   Team = 'Team',
 }
 
@@ -27,7 +27,7 @@ enum Ort {
 }
 
 export interface ChallangeItem {
-  Challange: string
+  Challenge: string
   Beschreibung: {
     text: string
     link: string
@@ -109,7 +109,7 @@ const convert = (item: JSONItem): ChallangeItem => {
   const Training = createTrainingField(item)
 
   return {
-    Challange: Challenge,
+    Challenge: Challenge,
     Beschreibung: {
       text: Beschreibung,
       link: Anleitungslink
