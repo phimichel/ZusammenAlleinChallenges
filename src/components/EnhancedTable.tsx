@@ -191,6 +191,10 @@ export default function EnhancedTable() {
     copy(absoluteCopyLink);
   }
 
+  function isMobileDevice() {
+    return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+  }
+
   const tagsToFilterBy = autoCompleteOptions.filter(option => selectedTags.includes(option.label))
 
   return (
@@ -215,7 +219,7 @@ export default function EnhancedTable() {
         <PlayCard items={selected} />
           <Button variant="contained" onClick={copyToClipboard} className="map-btn">Kopiere Link</Button>
           <Button variant="contained" onClick={navigateToLink} className="map-btn">Gehe zu Seite</Button>
-          <Button variant="contained" href={whatsappLink} className="button-whatsapp map-btn">In Whatsapp teilen</Button>
+          { isMobileDevice() ? <Button variant="contained" href={whatsappLink} className="button-whatsapp map-btn">In Whatsapp teilen</Button> : null}
           <Button variant="contained" onClick={createPicture} className="map-btn">Karte als Bild runterladen</Button>
       </Card>
       <Typography variant="h2">
