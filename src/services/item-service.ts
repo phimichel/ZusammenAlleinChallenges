@@ -22,8 +22,8 @@ enum Teilnehmer {
 }
 
 enum Ort {
-  indoor = 'indoor',
-  outdoor = 'outdoor',
+  indoor = 'Indoor',
+  outdoor = 'Outdoor',
 }
 
 export interface ChallangeItem {
