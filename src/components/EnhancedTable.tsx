@@ -82,6 +82,10 @@ export default function EnhancedTable() {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(50);
+  const [copyLink, setCopyLink] = React.useState('');
+  const [absoluteCopyLink, setAbsoluteCopyLink] = React.useState('');
+  const [whatsappLink, setWhatsappLink] = React.useState('');
+  
   const history = useHistory();
 
   const createWhatsAppLink = (): string => {
@@ -98,10 +102,6 @@ export default function EnhancedTable() {
   const navigateToLink = () => {
     history.push(createLink())
   }
-
-  const [copyLink, setCopyLink] = React.useState('');
-  const [absoluteCopyLink, setAbsoluteCopyLink] = React.useState('');
-  const [whatsappLink, setWhatsappLink] = React.useState('');
 
   useEffect(() => {
     setCopyLink(createLink())

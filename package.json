@@ -2,7 +2,7 @@
   "name": "jena-virus",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://phimichel.github.io/ZusammenAlleinChallenges",
+  "homepage": "https://phimichel.github.io/ZusammenAlleinChallenges/",
   "dependencies": {
     "@material-ui/core": "^4.9.5",
     "@material-ui/icons": "^4.9.1",
