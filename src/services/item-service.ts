@@ -1,4 +1,4 @@
-import items from '../items.json'
+import items from '../csvjson.json'
 
 type JSONItem = typeof items[0]
 
@@ -46,11 +46,11 @@ const isChecked = (input: string): boolean => {
 }
 
 const createOrtField = (item: JSONItem): Ort[] => {
-  const { inddoor, outdoor } = item
+  const { indoor, outdoor } = item
 
   const ort = [] as Ort[]
 
-  if (isChecked(inddoor)) {
+  if (isChecked(indoor)) {
     ort.push(Ort.indoor)
   }
 
@@ -99,7 +99,8 @@ const convert = (item: JSONItem): ChallangeItem => {
     Beschreibung,
     Mindestalter,
     Anleitungslink,
-    Tags
+    Tags,
+    Schwierigkeitsgrad
   } = item
 
   const Ort = createOrtField(item)
@@ -113,8 +114,8 @@ const convert = (item: JSONItem): ChallangeItem => {
       text: Beschreibung,
       link: Anleitungslink
     },
-    Altersgruppe: Mindestalter,
-    Level: 1,
+    Altersgruppe: Number(Mindestalter) || 6,
+    Level: Number(Schwierigkeitsgrad) || 1,
     Tags: Tags.split(',').map(item => item.trim()).filter(item => !!item),
     Ort,
     Teilnehmer,
