@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    name: Test
+    name: deploy to pages
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
