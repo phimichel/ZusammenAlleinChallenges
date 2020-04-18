@@ -1,4 +1,4 @@
-import items from '../csvjson.json'
+import items from '../items.json'
 
 type JSONItem = typeof items[0]
 
