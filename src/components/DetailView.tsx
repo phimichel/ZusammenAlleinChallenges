@@ -36,7 +36,7 @@ export default function DetailView() {
           <p>
           Wenn du Cybertraining ausprobieren m&ouml;chtest haben wir <a href="https://lutzkohl.github.io/Cybertraining/" target="blank">hier</a> alle Infos für dich. Weiterhin haben wir unten Challenges zusammengestellt, damit ihr euch trotz Social Distancing physisch und mental fit halten und miteinander in Kontakt treten k&ouml;nnt.
           Lasst euer Vereinsleben wieder aufblühen und bleibt aktiv. Also auf geht's runter von der Couch und ran an die Challenges!<br/><br/>
-          Erstelle dir deine individuelle ZusammenAlleinImVerein Bingo Card mit 16 Challenges zusammen. W&auml;hle dazu einfach Challenges an und die Seite generiert speziell für dich und dein Team eine Bingo Cards. Du kannst auch nach deinen W&uuml;nschen Filterungen der Challenges &uuml;ber die Suchfunktion vornehmen. Viel Spaß dabei!<br/>
+          Erstelle dir deine individuelle ZusammenAlleinImVerein Bingo Card mit 16 Challenges zusammen. W&auml;hle dazu einfach Challenges an und die Seite generiert speziell für dich und dein Team eine Bingo Card. Du kannst auch nach deinen W&uuml;nschen Filterungen der Challenges &uuml;ber die Suchfunktion vornehmen. Viel Spaß dabei!<br/>
           Wir freuen uns &uuml;ber eure Videos und Bilder zu den Challenges mit dem Hashtag #ZusammenAlleinImVerein.<br/><br/>
           Du hast Anregungen f&uuml;r weitere Challenges, die in der Liste fehlen? Schick sie an folgende E-Mailadresse: <a href="mailto:zusammenalleinchallenge@gmail.com">zusammenalleinchallenge@gmail.com</a>.
           </p>
