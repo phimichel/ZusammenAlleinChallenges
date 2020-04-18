@@ -18,7 +18,8 @@ import { PlayCardPictureService } from '../services/play-card-picture-service';
 import { useHistory } from "react-router-dom";
 import { ItemService, ChallangeItem } from '../services/item-service';
 import { Tag } from './Tag';
-import { AutocompleteService, createLevelTag, TagOption, createZielTag, createTrainingTag, createOrtTag, createTeilnehmerTag, createAltergruppeTag } from '../services/autocomplete-service';
+import { AutocompleteService, createLevelTag, TagOption, createZielTag, createTrainingTag, createOrtTag, createTeilnehmerTag, createAltergruppeTag, createTagsTag } from '../services/autocomplete-service';
+import copy from 'copy-to-clipboard'
 
 const rows = ItemService.getAll()
 const autoCompleteOptions = AutocompleteService.createAutocompleteOptions()
@@ -155,6 +156,10 @@ export default function EnhancedTable() {
       );
     }
 
+    if (newSelected.length > 16) {
+      return
+    }
+
     setSelected(newSelected);
   };
 
@@ -183,7 +188,7 @@ export default function EnhancedTable() {
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   const copyToClipboard = e => {
-    navigator.clipboard.writeText(absoluteCopyLink);
+    copy(absoluteCopyLink);
   }
 
   const tagsToFilterBy = autoCompleteOptions.filter(option => selectedTags.includes(option.label))
@@ -277,6 +282,7 @@ export default function EnhancedTable() {
                       >
                         <TableCell padding="checkbox">
                           <Checkbox
+                            disabled={selected.length === 16 && !isItemSelected}
                             checked={isItemSelected}
                             inputProps={{ 'aria-labelledby': labelId }}
                           />
@@ -313,7 +319,7 @@ export default function EnhancedTable() {
                           <Tag onClick={(ev) => addTag(createAltergruppeTag(row.Altersgruppe), ev)}>{createAltergruppeTag(row.Altersgruppe).label}</Tag>
                         </TableCell>
                         <TableCell align="left">
-                          {row.Tags.map((el, i) => <Tag key={i}>{el}</Tag>)}
+                          {row.Tags.map((el, i) => <Tag onClick={(ev) => addTag(createTagsTag(el), ev)} key={i}>{el}</Tag>)}
                         </TableCell>
                       </TableRow>
                     );
