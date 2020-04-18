@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core';
+import { Button, TextField, Typography, Card, Chip } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Paper from '@material-ui/core/Paper';
@@ -10,7 +10,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { EnhancedTableHead } from './EnhancedTableHead';
 import { PlayCard } from './PlayCard';
 import { PlayCardPictureService } from '../services/play-card-picture-service';
@@ -79,6 +79,38 @@ export default function EnhancedTable() {
   const [rowsPerPage, setRowsPerPage] = React.useState(50);
   const history = useHistory();
 
+  const createWhatsAppLink = (): string => {
+    const text = "Hier ist deine neue Bingokarte: "
+    return "whatsapp://send?text=" + encodeURI(text + absoluteCopyLink)
+  }
+  const createAbsoluteLink = (): string => {
+    const currentLoc = window.location.href;
+    return currentLoc.slice(0, currentLoc.length - 1) + copyLink;
+  }
+  const createLink = (): string => {
+    return '/view/' + new Buffer(selected.map((i, idx) => rows.findIndex(it => it.Challange === i)).join(',')).toString('base64')
+  }
+  const navigateToLink = () => {
+    history.push(createLink())
+  }
+
+  const [copyLink, setCopyLink] = React.useState('');
+  const [absoluteCopyLink, setAbsoluteCopyLink] = React.useState('');
+  const [whatsappLink, setWhatsappLink] = React.useState('');
+
+  useEffect(() => {
+    setCopyLink(createLink())
+  }, [selected])
+
+  useEffect(() => {
+    setAbsoluteCopyLink(createAbsoluteLink())
+  }, [copyLink])
+
+  useEffect(() => {
+    setWhatsappLink(createWhatsAppLink())
+  }, [absoluteCopyLink])
+
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -130,96 +162,117 @@ export default function EnhancedTable() {
   const createPicture = () => {
     PlayCardPictureService.downloadPicture()
   }
-  
-  const createLink = () => {     
-    history.push('/view/' + new Buffer(selected.map((i,idx) => rows.findIndex(it => it.Challange === i)).join(',')).toString('base64')  )
-  }
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
+  const copyToClipboard = e => {
+    navigator.clipboard.writeText(absoluteCopyLink);
+  }
+
   return (
     <div className={classes.root}>
-      <PlayCard items={selected} />
-      <Paper className={classes.paper}>
-        <TableContainer>
-          <Table
-            className={classes.table}
-            aria-labelledby="tableTitle"
-            size={dense ? 'small' : 'medium'}
-            aria-label="enhanced table"
-          >
-            <EnhancedTableHead
-              classes={classes}
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={rows.length}
-            />
-            <TableBody>
-              {stableSort(rows, getComparator(order as any, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row: ChallangeItem, index: number) => {
-                  const isItemSelected = isSelected(row.Challange);
-                  const labelId = `enhanced-table-checkbox-${index}`;
+      <Typography variant="h2">
+        Challenge-Card
+      </Typography>
+      <Card>
+        <PlayCard items={selected} />
+        <div>
+          <TextField id="copy-link" InputProps={{
+            readOnly: true,
+          }} defaultValue={absoluteCopyLink} value={absoluteCopyLink} />
+          <Button variant="contained" onClick={copyToClipboard}>Copy</Button>
+        </div>
+        <div>
+          <Button variant="contained" onClick={navigateToLink}>Gehe zu Seite</Button>
+        </div>
+        <div className="button-whatsapp">
+          <a href={whatsappLink}>In Whatsapp teilen</a>
+        </div>
+        <Button variant="contained" onClick={createPicture}>Karte exportieren</Button>
+      </Card>
+      <Typography variant="h2">
+        Challenges
+      </Typography>
+      <Card>
+        <Paper className={classes.paper}>
+          <TableContainer>
+            <Table
+              className={classes.table}
+              aria-labelledby="tableTitle"
+              size={dense ? 'small' : 'medium'}
+              aria-label="enhanced table"
+            >
+              <EnhancedTableHead
+                classes={classes}
+                numSelected={selected.length}
+                order={order}
+                orderBy={orderBy}
+                onSelectAllClick={handleSelectAllClick}
+                onRequestSort={handleRequestSort}
+                rowCount={rows.length}
+              />
+              <TableBody>
+                {stableSort(rows, getComparator(order as any, orderBy))
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row: ChallangeItem, index: number) => {
+                    const isItemSelected = isSelected(row.Challange);
+                    const labelId = `enhanced-table-checkbox-${index}`;
 
-                  return (
-                    <TableRow
-                      hover
-                      onClick={(event) => handleClick(event, row.Challange)}
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row.Challange}
-                      selected={isItemSelected}
-                    >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          checked={isItemSelected}
-                          inputProps={{ 'aria-labelledby': labelId }}
-                        />
-                      </TableCell>
-                      <TableCell component="th" id={labelId} scope="row" padding="none">
-                        {row.Challange}
-                      </TableCell>
-                      <TableCell align="right">{row.Beschreibung.text}</TableCell>
-                      <TableCell align="right">{row.Level}</TableCell>
-                      <TableCell align="right">{row.Ziel}</TableCell>
-                      <TableCell align="right">{row.Training}</TableCell>
-                      <TableCell align="right">{row.Teilnehmer}</TableCell>
-                      <TableCell align="right">{row.Ort}</TableCell>
-                      <TableCell align="right">{row.Altersgruppe}</TableCell>
-                      <TableCell align="right">{row.Tags}</TableCell>
-                    </TableRow>
-                  );
-                })}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[25, 50, 100]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
-      </Paper>
+                    return (
+                      <TableRow
+                        hover
+                        onClick={(event) => handleClick(event, row.Challange)}
+                        role="checkbox"
+                        aria-checked={isItemSelected}
+                        tabIndex={-1}
+                        key={row.Challange}
+                        selected={isItemSelected}
+                      >
+                        <TableCell padding="checkbox">
+                          <Checkbox
+                            checked={isItemSelected}
+                            inputProps={{ 'aria-labelledby': labelId }}
+                          />
+                        </TableCell>
+                        <TableCell component="th" id={labelId} scope="row" padding="none">
+                          {row.Challange}
+                        </TableCell>
+                        <TableCell align="left">{row.Beschreibung.text}</TableCell>
+                        <TableCell align="right"><Chip label={row.Level} /></TableCell>
+                        <TableCell align="right"><Chip label={row.Ziel} /></TableCell>
+                        <TableCell align="right"><Chip label={row.Training} /></TableCell>
+                        <TableCell align="right"><Chip label={row.Teilnehmer} /></TableCell>
+                        <TableCell align="right"><Chip label={row.Ort} /></TableCell>
+                        <TableCell align="right"><Chip label={row.Altersgruppe} /></TableCell>
+                        <TableCell align="right"><Chip label={row.Tags} /></TableCell>
+                      </TableRow>
+                    );
+                  })}
+                {emptyRows > 0 && (
+                  <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
+                    <TableCell colSpan={6} />
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[25, 50, 100]}
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+          />
+        </Paper>
+      </Card>
       <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
       />
-      <Button variant="contained" onClick={createLink}>Gehe zu Link</Button>
-      <Button variant="contained" onClick={createPicture}>Karte exportieren</Button>
     </div>
   );
 }

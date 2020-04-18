@@ -22,16 +22,13 @@ const App = () => {
           <Route exact path="/view/:id">
             <DetailView />
           </Route>
-          <Route path="/dashboard">
-            <EnhancedTable />
-          </Route>
           <Route path="/" exact>
-            <Redirect to="/dashboard" />
+            <EnhancedTable />
           </Route>
         </Switch>
       </div>
     </Router>
   </ThemeProvider>
   )}
- 
+
 export default App
