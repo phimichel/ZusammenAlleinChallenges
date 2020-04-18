@@ -39,3 +39,20 @@ a {
   margin-left: 20px !important;
   opacity: 1 !important;
 }
+
+div#intro {
+  max-width: 850px;
+  margin: 40px auto 50px;
+  text-align: center;
+}
+
+#intro h4 {
+  font-size: 14px;
+  text-transform: uppercase;
+  margin: 20px 0px;
+  color: #006481;
+}
+
+#intro p {
+  margin-top: 35px;
+}

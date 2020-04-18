@@ -29,6 +29,19 @@ export default function DetailView() {
       <Typography variant="h2">
         Willkommen bei deiner<br/>ZusammenAlleinImVerein-Challenge
       </Typography>
+      <Typography variant="subtitle1">
+        <div id="intro">
+          <h4>Du bist Trainer/in und m&ouml;chtest dein Sportteam weiter fit halten?</h4> 
+          <h4>Du bist Vereinsmitglied und vermisst deine Sportskollegen und -kolleginnen?</h4>
+          <p>
+          Wenn du Cybertraining ausprobieren m&ouml;chtest haben wir <a href="https://lutzkohl.github.io/Cybertraining/" target="blank">hier</a> alle Infos für dich. Weiterhin haben wir unten Challenges zusammengestellt, damit ihr euch trotz Social Distancing physisch und mental fit halten und miteinander in Kontakt treten k&ouml;nnt.
+          Lasst euer Vereinsleben wieder aufblühen und bleibt aktiv. Also auf geht's runter von der Couch und ran an die Challenges!<br/><br/>
+          Erstelle dir <strong>deine individuelle</strong> ZusammenAlleinImVerein <strong>Bingo Card</strong> mit 16 Challenges <strong>zusammen</strong>. W&auml;hle dazu einfach Challenges an und die Seite generiert speziell für dich und dein Team eine <strong>Bingo Cards</strong>. <strong>Du kannst auch nach deinen W&uuml;nschen Filterungen der Challenges &uuml;ber die Suchfunktion vornehmen.</strong> Viel Spaß dabei!<br/>
+          Wir freuen uns &uuml;ber eure Videos und Bilder zu den Challenges mit dem Hashtag #ZusammenAlleinImVerein.<br/><br/>
+          Du hast Anregungen f&uuml;r weitere Challenges, die in der Liste fehlen? Schick sie an folgende E-Mailadresse: <a href="mailto:zusammenalleinchallenge@gmail.com">zusammenalleinchallenge@gmail.com</a>.
+          </p>
+        </div>
+      </Typography>
       <Card className="half">
         <Typography variant="h3">
           Challenge-Card
