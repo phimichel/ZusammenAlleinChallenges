@@ -60,7 +60,7 @@ const createOrtTags: TagCreator = (item) => {
 }
 
 export const createAltergruppeTag = (value) => ({
-  field: 'Altergruppe',
+  field: 'Altersgruppe',
   value: value,
   label: `ab ${value} Jahren`
 })

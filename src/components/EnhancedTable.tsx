@@ -75,6 +75,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function EnhancedTable() {
   const classes = useStyles();
+  const [selectedTags, setSelectedTags] = React.useState([] as string[])
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([] as string[]);
@@ -169,7 +170,7 @@ export default function EnhancedTable() {
 
   const addTag = (tag: TagOption, ev: SyntheticEvent) => {
     ev.stopPropagation()
-    console.log(tag)
+    setSelectedTags([...selectedTags, tag.label])
   }
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
@@ -180,13 +181,15 @@ export default function EnhancedTable() {
     navigator.clipboard.writeText(absoluteCopyLink);
   }
 
+  const tagsToFilterBy = autoCompleteOptions.filter(option => selectedTags.includes(option.label))
+
   return (
     <div className={classes.root}>
       <PlayCard items={selected} />
       <div>
         <TextField id="copy-link" InputProps={{
           readOnly: true,
-        }} defaultValue={absoluteCopyLink} value={absoluteCopyLink} />
+        }} value={absoluteCopyLink} />
         <Button variant="contained" onClick={copyToClipboard}>Copy</Button>
       </div>
       <div>
@@ -199,6 +202,8 @@ export default function EnhancedTable() {
         <form style={{ display: 'inline-block' }} noValidate autoComplete="off" onSubmit={console.log}>
           <Autocomplete 
             multiple
+            value={selectedTags}
+            onChange={(ev, val) => setSelectedTags(val)}
             autoSelect={true}
             options={autoCompleteOptions.map(el => el.label)}
             renderInput={params => (
@@ -224,6 +229,20 @@ export default function EnhancedTable() {
             <TableBody>
               {stableSort(rows, getComparator(order as any, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .filter((row: ChallangeItem, index) => {
+                  if (tagsToFilterBy.length === 0) {
+                    return true
+                  }
+
+                  return tagsToFilterBy.every(tag => {
+                    const rowValue = row[tag.field]
+                    if (Array.isArray(rowValue)) {
+                      return rowValue.some(val => val === tag.value)
+                    } else {
+                      return row[tag.field] === tag.value
+                    }
+                  })
+                }) 
                 .map((row: ChallangeItem, index: number) => {
                   const isItemSelected = isSelected(row.Challange);
                   const labelId = `enhanced-table-checkbox-${index}`;
