@@ -264,7 +264,7 @@ export default function EnhancedTable() {
                             inputProps={{ 'aria-labelledby': labelId }}
                           />
                         </TableCell>
-                        <TableCell component="th" id={labelId} scope="row" padding="none">
+                        <TableCell component="th" id={labelId} scope="row" padding="none" style={{width: '100% !important'}}>
                           {row.Challange}
                         </TableCell>
                         <TableCell align="left">
@@ -277,25 +277,25 @@ export default function EnhancedTable() {
                             : null
                           }
                         </TableCell>
-                        <TableCell align="right">
+                        <TableCell align="left">
                           <Tag onClick={(ev) => addTag(createLevelTag(row.Level), ev)}>{createLevelTag(row.Level).label}</Tag>
                         </TableCell>
-                        <TableCell align="right">
+                        <TableCell align="left">
                           {row.Ziel.map((el, i) => <Tag onClick={(ev) => addTag(createZielTag(el), ev)} key={i}>{createZielTag(el).label}</Tag>)}
                         </TableCell>
-                        <TableCell align="right">
+                        <TableCell align="left">
                           {row.Training.map((el, i) => <Tag onClick={(ev) => addTag(createTrainingTag(el), ev)} key={i}>{el}</Tag>)}
                         </TableCell>
-                        <TableCell align="right">
+                        <TableCell align="left">
                           {row.Teilnehmer.map((el, i) => <Tag onClick={(ev) => addTag(createTeilnehmerTag(el), ev)} key={i}>{el}</Tag>)}
                         </TableCell>
-                        <TableCell align="right">
+                        <TableCell align="left">
                           {row.Ort.map((el, i) => <Tag onClick={(ev) => addTag(createOrtTag(el), ev)} key={i}>{el}</Tag>)}
                         </TableCell>
-                        <TableCell align="right">
+                        <TableCell align="left">
                           <Tag onClick={(ev) => addTag(createAltergruppeTag(row.Altersgruppe), ev)}>{createAltergruppeTag(row.Altersgruppe).label}</Tag>
                         </TableCell>
-                        <TableCell align="right">
+                        <TableCell align="left">
                           {row.Tags.map((el, i) => <Tag key={i}>{el}</Tag>)}
                         </TableCell>
                       </TableRow>

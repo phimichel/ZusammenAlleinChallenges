@@ -30,3 +30,12 @@ a {
   color: #ffffff;
   text-decoration: none;
 }
+
+.MuiTableCell-head {
+  text-align: left !important;
+}
+
+.MuiTableSortLabel-icon {
+  margin-left: 20px !important;
+  opacity: 1 !important;
+}
