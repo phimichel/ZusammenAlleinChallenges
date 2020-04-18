@@ -31,7 +31,7 @@ export default function DetailView() {
       </Typography>
       <Card className="half">
         <Typography variant="h3">
-          Challenge-Card
+          Bingo-Challenge-Card
         </Typography>
         <PlayCard items={selected.map(item => item.Challenge)} />
       </Card>
