@@ -85,16 +85,22 @@ export default function EnhancedTable() {
   const [copyLink, setCopyLink] = React.useState('');
   const [absoluteCopyLink, setAbsoluteCopyLink] = React.useState('');
   const [whatsappLink, setWhatsappLink] = React.useState('');
-  
+
   const history = useHistory();
 
   const createWhatsAppLink = (): string => {
     const text = "Hier ist deine neue Bingokarte: "
-    return "whatsapp://send?text=" + encodeURI(text + absoluteCopyLink)
+    const link = "whatsapp://send?text=" + encodeURIComponent(text + absoluteCopyLink)
+    console.log('whatsapp link', link)
+
+    return link
   }
   const createAbsoluteLink = (): string => {
     const currentLoc = window.location.href;
-    return currentLoc.slice(0, currentLoc.length - 1) + copyLink;
+    const basePath = currentLoc.slice(0, currentLoc.length - 1)
+
+    console.log(basePath, copyLink)
+    return basePath + copyLink;
   }
   const createLink = (): string => {
     return '/view/' + new Buffer(selected.map((i, idx) => rows.findIndex(it => it.Challange === i)).join(',')).toString('base64')
