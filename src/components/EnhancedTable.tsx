@@ -156,6 +156,10 @@ export default function EnhancedTable() {
       );
     }
 
+    if (newSelected.length > 16) {
+      return
+    }
+
     setSelected(newSelected);
   };
 
@@ -265,6 +269,7 @@ export default function EnhancedTable() {
                       >
                         <TableCell padding="checkbox">
                           <Checkbox
+                            disabled={selected.length === 16 && !isItemSelected}
                             checked={isItemSelected}
                             inputProps={{ 'aria-labelledby': labelId }}
                           />
