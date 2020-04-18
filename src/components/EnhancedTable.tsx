@@ -215,7 +215,7 @@ export default function EnhancedTable() {
         <PlayCard items={selected} />
           <Button variant="contained" onClick={copyToClipboard} className="map-btn">Kopiere Link</Button>
           <Button variant="contained" onClick={navigateToLink} className="map-btn">Gehe zu Seite</Button>
-          <Button variant="contained" className="button-whatsapp map-btn"><a href={whatsappLink}>In Whatsapp teilen</a></Button>
+          <Button variant="contained" href={whatsappLink} className="button-whatsapp map-btn">In Whatsapp teilen</Button>
           <Button variant="contained" onClick={createPicture} className="map-btn">Karte als Bild runterladen</Button>
       </Card>
       <Typography variant="h2">
