@@ -108,7 +108,7 @@ export default function EnhancedTable() {
     return '/view/' + new Buffer(selected.map((i, idx) => rows.findIndex(it => it.Challange === i)).join(',')).toString('base64')
   }
   const navigateToLink = () => {
-    history.push(createLink())
+    window.open(absoluteCopyLink)
   }
 
   useEffect(() => {
