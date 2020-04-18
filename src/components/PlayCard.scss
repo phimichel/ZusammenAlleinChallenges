@@ -6,9 +6,13 @@
   flex-wrap: wrap;
   margin: auto;
   border: 2px solid #B7DBE2;
-  // position: sticky;
   top: 0;
   background-color: white;
+
+  @media (max-width: 420px) {
+    width: 100%;
+    font-size: 0.8em;
+  }
 
   &__item {
     flex-basis: 25%;
