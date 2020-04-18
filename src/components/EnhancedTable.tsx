@@ -55,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     width: '100%',
+    padding: '0',
     marginBottom: theme.spacing(2),
   },
   table: {
@@ -216,7 +217,6 @@ export default function EnhancedTable() {
           )} />
       </form>
       <Card>
-        <Paper className={classes.paper}>
           <TableContainer>
             <Table
               className={classes.table}
@@ -324,7 +324,6 @@ export default function EnhancedTable() {
             onChangePage={handleChangePage}
             onChangeRowsPerPage={handleChangeRowsPerPage}
           />
-        </Paper>
       </Card>
       <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
