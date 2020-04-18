@@ -82,7 +82,7 @@ export default function EnhancedTable() {
   const [selected, setSelected] = React.useState([] as string[]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(50);
+  const [rowsPerPage, setRowsPerPage] = React.useState(25);
   const [copyLink, setCopyLink] = React.useState('');
   const [absoluteCopyLink, setAbsoluteCopyLink] = React.useState('');
   const [whatsappLink, setWhatsappLink] = React.useState('');
@@ -181,8 +181,6 @@ export default function EnhancedTable() {
   }
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
-
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   const copyToClipboard = e => {
     navigator.clipboard.writeText(absoluteCopyLink);
@@ -307,16 +305,11 @@ export default function EnhancedTable() {
                       </TableRow>
                     );
                   })}
-                {emptyRows > 0 && (
-                  <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                    <TableCell colSpan={6} />
-                  </TableRow>
-                )}
               </TableBody>
             </Table>
           </TableContainer>
           <TablePagination
-            rowsPerPageOptions={[25, 50, 100]}
+            rowsPerPageOptions={[25, 50]}
             component="div"
             count={rows.length}
             rowsPerPage={rowsPerPage}
@@ -325,10 +318,6 @@ export default function EnhancedTable() {
             onChangeRowsPerPage={handleChangeRowsPerPage}
           />
       </Card>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      />
     </div>
   );
 }
