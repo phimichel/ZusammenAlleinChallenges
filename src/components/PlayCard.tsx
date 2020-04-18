@@ -21,12 +21,12 @@ export const PlayCard: React.FC<PlayCardProps> = ({ items = []}) => {
   }
 
   return (
-    <div className="play-card" id="play-card">
-      {displayItems.map((item, i) => (
-        <div key={i} className="play-card__item">
-          <span className="play-card__item-text">{item}</span>
-        </div>    
-      ))}
-    </div>
+        <div className="play-card" id="play-card">
+          {displayItems.map((item, i) => (
+            <div key={i} className="play-card__item">
+              <span className="play-card__item-text">{item}</span>
+            </div>    
+          ))}
+        </div>
   )
 }

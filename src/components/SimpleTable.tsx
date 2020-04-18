@@ -15,16 +15,18 @@ interface SimpleTableProps {
 export const SimpleTable: React.FC<SimpleTableProps> = ({ items = [] }) => {
     const displayItems = [...items]
     return (
-        <div className="simple-table">
-                {displayItems.map((item: any, index: number) => {
-                    return (
-                        <Paper variant="outlined">
-                            <div>{item.Challange}</div>
-                            <div>{item.Beschreibung}</div>
-                            <div>{item.Anleitungslink && <a target="_blank" rel="noopener noreferrer" href={item.Anleitungslink}>Anleitung</a>}</div>
-                        </Paper>
-                    );
-                })}
+        <div className="card" id="table-card">
+            <div className="simple-table">
+                    {displayItems.map((item: any, index: number) => {
+                        return (
+                            <Paper variant="outlined">
+                                <div>{item.Challange}</div>
+                                <div>{item.Beschreibung}</div>
+                                <div>{item.Anleitungslink && <a target="_blank" rel="noopener noreferrer" href={item.Anleitungslink}>Anleitung</a>}</div>
+                            </Paper>
+                        );
+                    })}
+            </div>
         </div>
     );
 }

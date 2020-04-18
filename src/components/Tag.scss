@@ -1,10 +1,13 @@
 
 .tag {
   display: block;
-  border: 1px solid hotpink;
+  border: 1px solid #B7DBE2;
+  background-color: #F1FFFF;
+  color: #006481;
   padding: 0.25em 0.5em;
   margin-bottom: 0.25em;
   border-radius: 3px;
   text-align: center;
   cursor: pointer;
+  font-size: 12px;
 }

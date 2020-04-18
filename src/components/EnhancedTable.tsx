@@ -1,4 +1,4 @@
-import { Button, TextField } from '@material-ui/core';
+import { Button, TextField, Typography, Card, Link } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Paper from '@material-ui/core/Paper';
@@ -185,144 +185,154 @@ export default function EnhancedTable() {
 
   return (
     <div className={classes.root}>
-      <PlayCard items={selected} />
-      <div>
-        <TextField id="copy-link" InputProps={{
-          readOnly: true,
-        }} value={absoluteCopyLink} />
-        <Button variant="contained" onClick={copyToClipboard}>Copy</Button>
-      </div>
-      <div>
-        <Button variant="contained" onClick={navigateToLink}>Gehe zu Seite</Button>
-      </div>
-      <div className="button-whatsapp">
-        <a href={whatsappLink}>In Whatsapp teilen</a>
-      </div>
-      <Paper className={classes.paper}>
-        <form style={{ display: 'inline-block' }} noValidate autoComplete="off" onSubmit={console.log}>
-          <Autocomplete 
-            multiple
-            value={selectedTags}
-            onChange={(ev, val) => setSelectedTags(val)}
-            autoSelect={true}
-            options={autoCompleteOptions.map(el => el.label)}
-            renderInput={params => (
-              <TextField style={{ width: '500px'}} variant="outlined" label="Suche" {...params} />
-            )} />
-        </form>
-        <TableContainer>
-          <Table
-            className={classes.table}
-            aria-labelledby="tableTitle"
-            size={dense ? 'small' : 'medium'}
-            aria-label="enhanced table"
-          >
-            <EnhancedTableHead
-              classes={classes}
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={rows.length}
-            />
-            <TableBody>
-              {stableSort(rows, getComparator(order as any, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .filter((row: ChallangeItem, index) => {
-                  if (tagsToFilterBy.length === 0) {
-                    return true
-                  }
-
-                  return tagsToFilterBy.every(tag => {
-                    const rowValue = row[tag.field]
-                    if (Array.isArray(rowValue)) {
-                      return rowValue.some(val => val === tag.value)
-                    } else {
-                      return row[tag.field] === tag.value
+      <Typography variant="h2">
+        Challenge-Card
+      </Typography>
+      <Card>
+        <PlayCard items={selected} />
+        <div>
+          <TextField id="copy-link" InputProps={{
+            readOnly: true,
+          }} value={absoluteCopyLink} />
+          <Button variant="contained" onClick={copyToClipboard}>Copy</Button>
+        </div>
+        <div>
+          <Button variant="contained" onClick={navigateToLink}>Gehe zu Seite</Button>
+        </div>
+        <div className="button-whatsapp">
+          <a href={whatsappLink}>In Whatsapp teilen</a>
+        </div>
+        <Button variant="contained" onClick={createPicture}>Karte exportieren</Button>
+      </Card>
+      <Typography variant="h2">
+        Challenges
+      </Typography>
+      <form style={{ display: 'inline-block' }} noValidate autoComplete="off" onSubmit={console.log}>
+        <Autocomplete 
+          multiple
+          value={selectedTags}
+          onChange={(ev, val) => setSelectedTags(val)}
+          autoSelect={true}
+          options={autoCompleteOptions.map(el => el.label)}
+          renderInput={params => (
+            <TextField style={{ width: '500px'}} variant="outlined" label="Suche" {...params} />
+          )} />
+      </form>
+      <Card>
+        <Paper className={classes.paper}>
+          <TableContainer>
+            <Table
+              className={classes.table}
+              aria-labelledby="tableTitle"
+              size={dense ? 'small' : 'medium'}
+              aria-label="enhanced table"
+            >
+              <EnhancedTableHead
+                classes={classes}
+                numSelected={selected.length}
+                order={order}
+                orderBy={orderBy}
+                onSelectAllClick={handleSelectAllClick}
+                onRequestSort={handleRequestSort}
+                rowCount={rows.length}
+              />
+              <TableBody>
+                {stableSort(rows, getComparator(order as any, orderBy))
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .filter((row: ChallangeItem, index) => {
+                    if (tagsToFilterBy.length === 0) {
+                      return true
                     }
-                  })
-                }) 
-                .map((row: ChallangeItem, index: number) => {
-                  const isItemSelected = isSelected(row.Challange);
-                  const labelId = `enhanced-table-checkbox-${index}`;
+  
+                    return tagsToFilterBy.every(tag => {
+                      const rowValue = row[tag.field]
+                      if (Array.isArray(rowValue)) {
+                        return rowValue.some(val => val === tag.value)
+                      } else {
+                        return row[tag.field] === tag.value
+                      }
+                    })
+                  })   
+                  .map((row: ChallangeItem, index: number) => {
+                    const isItemSelected = isSelected(row.Challange);
+                    const labelId = `enhanced-table-checkbox-${index}`;
 
-                  return (
-                    <TableRow
-                      hover
-                      onClick={(event) => handleClick(event, row.Challange)}
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row.Challange}
-                      selected={isItemSelected}
-                    >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          checked={isItemSelected}
-                          inputProps={{ 'aria-labelledby': labelId }}
-                        />
-                      </TableCell>
-                      <TableCell component="th" id={labelId} scope="row" padding="none">
-                        {row.Challange}
-                      </TableCell>
-                      <TableCell align="right">
-                        <span>
-                          {row.Beschreibung.text}
-                        </span>
-                        <br/>
-                        {!!row.Beschreibung.link ? 
-                          (<span><strong>Link: </strong><a href={row.Beschreibung.link}>{row.Beschreibung.link}</a></span>)
-                          : null
-                        }
-                      </TableCell>
-                      <TableCell align="right">
-                        <Tag onClick={(ev) => addTag(createLevelTag(row.Level), ev)}>{createLevelTag(row.Level).label}</Tag>
-                      </TableCell>
-                      <TableCell align="right">
-                        {row.Ziel.map((el, i) => <Tag onClick={(ev) => addTag(createZielTag(el), ev)} key={i}>{createZielTag(el).label}</Tag>)}
-                      </TableCell>
-                      <TableCell align="right">
-                        {row.Training.map((el, i) => <Tag onClick={(ev) => addTag(createTrainingTag(el), ev)} key={i}>{el}</Tag>)}
-                      </TableCell>
-                      <TableCell align="right">
-                        {row.Teilnehmer.map((el, i) => <Tag onClick={(ev) => addTag(createTeilnehmerTag(el), ev)} key={i}>{el}</Tag>)}
-                      </TableCell>
-                      <TableCell align="right">
-                        {row.Ort.map((el, i) => <Tag onClick={(ev) => addTag(createOrtTag(el), ev)} key={i}>{el}</Tag>)}
-                      </TableCell>
-                      <TableCell align="right">
-                        <Tag onClick={(ev) => addTag(createAltergruppeTag(row.Altersgruppe), ev)}>{createAltergruppeTag(row.Altersgruppe).label}</Tag>
-                      </TableCell>
-                      <TableCell align="right">
-                        {row.Tags.map((el, i) => <Tag key={i}>{el}</Tag>)}
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[25, 50, 100]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
-      </Paper>
+                    return (
+                      <TableRow
+                        hover
+                        onClick={(event) => handleClick(event, row.Challange)}
+                        role="checkbox"
+                        aria-checked={isItemSelected}
+                        tabIndex={-1}
+                        key={row.Challange}
+                        selected={isItemSelected}
+                      >
+                        <TableCell padding="checkbox">
+                          <Checkbox
+                            checked={isItemSelected}
+                            inputProps={{ 'aria-labelledby': labelId }}
+                          />
+                        </TableCell>
+                        <TableCell component="th" id={labelId} scope="row" padding="none">
+                          {row.Challange}
+                        </TableCell>
+                        <TableCell align="left">
+                          <span>
+                            {row.Beschreibung.text}
+                          </span>
+                          <br/>
+                          {!!row.Beschreibung.link ? 
+                            (<span><strong>Link: </strong><Link href={row.Beschreibung.link}>{row.Beschreibung.link}</Link></span>)
+                            : null
+                          }
+                        </TableCell>
+                        <TableCell align="right">
+                          <Tag onClick={(ev) => addTag(createLevelTag(row.Level), ev)}>{createLevelTag(row.Level).label}</Tag>
+                        </TableCell>
+                        <TableCell align="right">
+                          {row.Ziel.map((el, i) => <Tag onClick={(ev) => addTag(createZielTag(el), ev)} key={i}>{createZielTag(el).label}</Tag>)}
+                        </TableCell>
+                        <TableCell align="right">
+                          {row.Training.map((el, i) => <Tag onClick={(ev) => addTag(createTrainingTag(el), ev)} key={i}>{el}</Tag>)}
+                        </TableCell>
+                        <TableCell align="right">
+                          {row.Teilnehmer.map((el, i) => <Tag onClick={(ev) => addTag(createTeilnehmerTag(el), ev)} key={i}>{el}</Tag>)}
+                        </TableCell>
+                        <TableCell align="right">
+                          {row.Ort.map((el, i) => <Tag onClick={(ev) => addTag(createOrtTag(el), ev)} key={i}>{el}</Tag>)}
+                        </TableCell>
+                        <TableCell align="right">
+                          <Tag onClick={(ev) => addTag(createAltergruppeTag(row.Altersgruppe), ev)}>{createAltergruppeTag(row.Altersgruppe).label}</Tag>
+                        </TableCell>
+                        <TableCell align="right">
+                          {row.Tags.map((el, i) => <Tag key={i}>{el}</Tag>)}
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                {emptyRows > 0 && (
+                  <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
+                    <TableCell colSpan={6} />
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[25, 50, 100]}
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onChangePage={handleChangePage}
+            onChangeRowsPerPage={handleChangeRowsPerPage}
+          />
+        </Paper>
+      </Card>
       <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
       />
-      <Button variant="contained" onClick={createPicture}>Karte exportieren</Button>
     </div>
   );
 }

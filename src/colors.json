@@ -1,0 +1,6 @@
+{
+    "primary" : { "main" : "#006481", "light": "#6EB6C5", "lighter": "#F1FFFF" },
+    "warning" : { "main" : "#FF454C" },
+    "success" : { "main" : "#00BA48" },
+    "gray" : { "main" : "#C3C3C3", "bg" : "#F5F5F5", "dark" : "#43464A", "light" : "#B1B1B1"}
+}
